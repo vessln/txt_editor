@@ -1,6 +1,6 @@
 import os
 import tkinter as tk
-from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import askopenfilename, asksaveasfilename
 
 
 def text_editor():
@@ -15,6 +15,16 @@ def text_editor():
                 text_edit.insert(tk.END, text)
                 name_of_file = os.path.basename(filepath)
                 window.title(f"Edit text in {name_of_file}")
+
+    def save_as_file():
+        filepath = asksaveasfilename(defaultextension='txt', filetypes=[('Text Files', '*.txt'), ('All Files', '*.*')])
+
+        if filepath:
+            with open(filepath, 'w') as saved_file:
+                text = text_edit.get(1.0, tk.END)
+                saved_file.write(text)
+                name_of_file = os.path.basename(filepath)
+            window.title(f"{name_of_file} edited with Vesi\'s editor")
 
     window = tk.Tk()
     window.title("Vesi's text editor")
@@ -31,6 +41,7 @@ def text_editor():
     window.columnconfigure(1, weight=1, minsize=1000)
 
     menu_bar.add_command(label="Open", command=open_file)
+    menu_bar.add_command(label="Save As", command=save_as_file)
 
     window.mainloop()
 
