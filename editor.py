@@ -22,17 +22,23 @@ def text_editor():
                     name_of_file = os.path.basename(filepath)
                     window.title(f"Edit text in {name_of_file}")
 
-    def save_file():
+    def save_as_new_file():
+        content = text_edit.get(1.0, tk.END)
 
-        filepath = asksaveasfilename(defaultextension="txt", filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
+        if content.strip() == "":
+            messagebox.showerror("Error", "There is no content!")
 
-        if filepath:
-            with open(filepath, 'w') as saved_file:
-                text = text_edit.get(1.0, tk.END)
-                saved_file.write(text)
-                name_of_file = os.path.basename(filepath)
+        else:
 
-            window.title(f"{name_of_file} edited with Vesi\'s editor")
+            filepath = asksaveasfilename(defaultextension="txt", filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
+
+            if filepath:
+                with open(filepath, 'w') as saved_file:
+                    text = text_edit.get(1.0, tk.END)
+                    saved_file.write(text)
+                    name_of_file = os.path.basename(filepath)
+
+                window.title(f"{name_of_file} edited with Vesi\'s editor")
 
     def delete_content():
 
@@ -56,7 +62,7 @@ def text_editor():
     window.columnconfigure(1, weight=1, minsize=1000)
 
     menu_bar.add_command(label="Open", command=open_file)
-    menu_bar.add_command(label="Save As", command=save_file)
+    menu_bar.add_command(label="Save As", command=save_as_new_file)
     menu_bar.add_command(label="Delete", command=delete_content)
 
     window.mainloop()
