@@ -1,1 +1,1 @@
-Simple python text editor
+My simple python tkinter based text editor.
