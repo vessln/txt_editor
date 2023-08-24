@@ -8,19 +8,18 @@ def text_editor():
 
     def open_file():
 
-        answer = messagebox.askretrycancel("Warning",
-                        "When you open other file, if there is any content in current file, it will be deleted.")
-        if answer:
+        answer = messagebox.askquestion("Delete", "Do you want to delete all content in current file?")
+        if answer == "yes":
             text_edit.delete(1.0, tk.END)
 
-            filepath = askopenfilename(filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
+        filepath = askopenfilename(filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
 
-            if filepath:
-                with open(filepath, "r") as new_file:
-                    text = new_file.read()
-                    text_edit.insert(tk.END, text)
-                    name_of_file = os.path.basename(filepath)
-                    window.title(f"Edit text in {name_of_file}")
+        if filepath:
+            with open(filepath, "r") as new_file:
+                text = new_file.read()
+                text_edit.insert(tk.END, text)
+                name_of_file = os.path.basename(filepath)
+                window.title(f"Edit text in {name_of_file}")
 
     def save_as_new_file():
         content = text_edit.get(1.0, tk.END)
@@ -29,7 +28,6 @@ def text_editor():
             messagebox.showerror("Error", "There is no content!")
 
         else:
-
             filepath = asksaveasfilename(defaultextension="txt", filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
 
             if filepath:
