@@ -7,6 +7,7 @@ from tkinter.filedialog import askopenfilename, asksaveasfilename
 def text_editor():
 
     def open_file():
+        global filepath
 
         answer = messagebox.askquestion("Delete", "Do you want to delete all content in current file?")
         if answer == "yes":
@@ -22,10 +23,12 @@ def text_editor():
                 window.title(f"Edit text in {name_of_file}")
 
     def save_as_new_file():
+        global filepath
+
         content = text_edit.get(1.0, tk.END)
 
         if content.strip() == "":
-            messagebox.showerror("Error", "There is no content!")
+            messagebox.showerror("Error", "Empty file!")
 
         else:
             filepath = asksaveasfilename(defaultextension="txt", filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")])
@@ -37,6 +40,20 @@ def text_editor():
                     name_of_file = os.path.basename(filepath)
 
                 window.title(f"{name_of_file} edited with Vesi\'s editor")
+
+    def save_file():
+
+        content = text_edit.get(1.0, tk.END)
+
+        if content.strip() == "":
+            messagebox.showerror("Error", "Empty file!")
+
+        else:
+            if filepath:
+                with open(filepath, 'w') as saved_file:
+                    text = text_edit.get(1.0, tk.END)
+                    saved_file.write(text)
+                    messagebox.showinfo("Info", "The file was saved.")
 
     def delete_content():
 
@@ -61,6 +78,7 @@ def text_editor():
 
     menu_bar.add_command(label="Open", command=open_file)
     menu_bar.add_command(label="Save As", command=save_as_new_file)
+    menu_bar.add_command(label="Save file", command=save_file)
     menu_bar.add_command(label="Delete", command=delete_content)
 
     window.mainloop()
