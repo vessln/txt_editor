@@ -54,6 +54,8 @@ def text_editor():
                     text = text_edit.get(1.0, tk.END)
                     saved_file.write(text)
                     messagebox.showinfo("Info", "The file was saved.")
+            else:
+                save_as_new_file()
 
     def delete_content():
 
