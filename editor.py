@@ -1,9 +1,8 @@
 import os
 import tkinter as tk
-from tkinter import messagebox, LEFT
+from tkinter import messagebox
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from tkinter.simpledialog import askstring
-from tkinter import Entry
 
 
 def text_editor():
@@ -61,7 +60,7 @@ def text_editor():
 
     def find_text():
 
-        searching_text = askstring("Find", "Enter searched text:")
+        searching_text = askstring("Find", "Enter search text:")
 
         text_edit.tag_remove("find", 1.0, tk.END)
         index = 1.0
