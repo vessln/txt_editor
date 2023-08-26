@@ -1,7 +1,9 @@
 import os
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, LEFT
 from tkinter.filedialog import askopenfilename, asksaveasfilename
+from tkinter.simpledialog import askstring
+from tkinter import Entry
 
 
 def text_editor():
@@ -42,7 +44,7 @@ def text_editor():
                 window.title(f"{name_of_file} edited with Vesi\'s editor")
 
     def save_file():
-
+        global filepath
         content = text_edit.get(1.0, tk.END)
 
         if content.strip() == "":
@@ -57,12 +59,32 @@ def text_editor():
             else:
                 save_as_new_file()
 
+    def find_text():
+
+        searching_text = askstring("Find", "Enter searched text:")
+
+        text_edit.tag_remove("find", 1.0, tk.END)
+        index = 1.0
+
+        while True:
+            index = text_edit.search(searching_text, index, nocase=1, stopindex=tk.END)
+
+            if not index:
+                break
+
+            last_index = "%s+%dc" % (index, len(searching_text))
+            text_edit.tag_add("find", index, last_index)
+            index = last_index
+
+        text_edit.tag_config("find", foreground="red")
+
     def delete_content():
 
         answer = messagebox.askquestion("Confirmation", "Аre you sure you want to delete all content?")
 
         if answer == "yes":
             text_edit.delete(1.0, tk.END)
+
 
     window = tk.Tk()
     window.title("Vesi's text editor")
@@ -81,11 +103,13 @@ def text_editor():
     menu_bar.add_command(label="Open", command=open_file)
     menu_bar.add_command(label="Save As", command=save_as_new_file)
     menu_bar.add_command(label="Save", command=save_file)
+    menu_bar.add_command(label="Find", command=find_text)
     menu_bar.add_command(label="Delete", command=delete_content)
 
     window.mainloop()
 
 
 if __name__ == '__main__':
+    filepath = None
     text_editor()
 
