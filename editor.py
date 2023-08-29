@@ -75,7 +75,7 @@ def text_editor():
             text_edit.tag_add("find", index, last_index)
             index = last_index
 
-        if searching_text not in text_edit.get(1.0, tk.END):
+        if searching_text.lower() not in text_edit.get(1.0, tk.END).lower():
             messagebox.showerror("Error", "Nothing found!")
 
         else:
