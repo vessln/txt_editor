@@ -62,7 +62,8 @@ def text_editor():
 
         searching_text = askstring("Find", "Enter search text:")
 
-        text_edit.tag_remove("find", 1.0, tk.END)
+        remove_mark()
+
         index = 1.0
 
         while True:
@@ -81,6 +82,9 @@ def text_editor():
         else:
             text_edit.tag_config("find", foreground="red")
 
+    def remove_mark():
+        text_edit.tag_remove("find", 1.0, tk.END)
+
     def delete_content():
 
         answer = messagebox.askquestion("Confirmation", "Аre you sure you want to delete all content?")
@@ -93,8 +97,9 @@ def text_editor():
     window.title("Vesi's text editor")
 
     text_edit = tk.Text(window, state="normal", background="LightCyan2", font=("Arial", 12))
-    frame = tk.Frame(window, relief=tk.RAISED, border=0)
+    frame = tk.Frame(window, relief=tk.RAISED, border=1)
     menu_bar = tk.Menu(window)
+    search_menu = tk.Menu(menu_bar, tearoff=0)
 
     window.config(menu=menu_bar)
 
@@ -106,7 +111,11 @@ def text_editor():
     menu_bar.add_command(label="Open", command=open_file)
     menu_bar.add_command(label="Save As", command=save_as_new_file)
     menu_bar.add_command(label="Save", command=save_file)
-    menu_bar.add_command(label="Find", command=find_text)
+
+    search_menu.add_command(label="Find", command=find_text)
+    search_menu.add_command(label="Remove mark", command=remove_mark)
+    menu_bar.add_cascade(label="Search text", menu=search_menu)
+
     menu_bar.add_command(label="Delete", command=delete_content)
 
     window.mainloop()
