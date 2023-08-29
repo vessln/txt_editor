@@ -75,7 +75,11 @@ def text_editor():
             text_edit.tag_add("find", index, last_index)
             index = last_index
 
-        text_edit.tag_config("find", foreground="red")
+        if searching_text not in text_edit.get(1.0, tk.END):
+            messagebox.showerror("Error", "Nothing found!")
+
+        else:
+            text_edit.tag_config("find", foreground="red")
 
     def delete_content():
 
@@ -89,7 +93,7 @@ def text_editor():
     window.title("Vesi's text editor")
 
     text_edit = tk.Text(window, state="normal", background="LightCyan2", font=("Arial", 12))
-    frame = tk.Frame(window, relief=tk.RAISED, bd=0)
+    frame = tk.Frame(window, relief=tk.RAISED, border=0)
     menu_bar = tk.Menu(window)
 
     window.config(menu=menu_bar)
