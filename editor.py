@@ -84,11 +84,14 @@ def text_editor():
     def remove_mark():
         text_edit.tag_remove("find", 1.0, tk.END)
 
-    def settings_file():
-        pass
-
     def change_background_color():
-        pass
+        num = background_color.get()
+        colors_numbers = {1: "floral white",
+                          2: "gray35",
+                          3: "LightCyan2",
+                          4: "DarkOliveGreen3"}
+
+        text_edit.config(background=colors_numbers[num])
 
     def change_font_type():
         pass
@@ -112,6 +115,9 @@ def text_editor():
     menu_bar = tk.Menu(window)
     search_menu = tk.Menu(menu_bar, tearoff=False)
     settings_menu = tk.Menu(menu_bar, tearoff=False)
+    background_menu = tk.Menu(settings_menu, tearoff=False)
+    type_menu = tk.Menu()
+    size_menu = tk.Menu()
 
     window.config(menu=menu_bar)
 
@@ -124,14 +130,20 @@ def text_editor():
     menu_bar.add_command(label="Save As", command=save_as_new_file)
     menu_bar.add_command(label="Save", command=save_file)
 
+    menu_bar.add_cascade(label="Search text", menu=search_menu)
     search_menu.add_command(label="Find", command=find_text)
     search_menu.add_command(label="Remove mark", command=remove_mark)
-    menu_bar.add_cascade(label="Search text", menu=search_menu)
 
-    settings_menu.add_command(label="Background color", command=change_background_color)
-    settings_menu.add_command(label="Font type", command=change_font_type)
-    settings_menu.add_command(label="Font size", command=change_font_size)
     menu_bar.add_cascade(label="Settings", menu=settings_menu)
+    settings_menu.add_cascade(label="Background color", menu=background_menu)
+    settings_menu.add_cascade(label="Font type", menu=type_menu)
+    settings_menu.add_cascade(label="Font size", menu=size_menu)
+
+    background_color = tk.IntVar()
+    background_menu.add_radiobutton(label="Light", value=1, variable=background_color, command=change_background_color)
+    background_menu.add_radiobutton(label="Dark", value=2, variable=background_color, command=change_background_color)
+    background_menu.add_radiobutton(label="Blue", value=3, variable=background_color, command=change_background_color)
+    background_menu.add_radiobutton(label="Green", value=4, variable=background_color, command=change_background_color)
 
     menu_bar.add_command(label="Delete", command=delete_content)
 
