@@ -55,15 +55,14 @@ def text_editor():
                     text = text_edit.get(1.0, tk.END)
                     saved_file.write(text)
                     messagebox.showinfo("Info", "The file was saved.")
+
             else:
                 save_as_new_file()
 
     def find_text():
-
         searching_text = askstring("Find", "Enter search text:")
 
         remove_mark()
-
         index = 1.0
 
         while True:
@@ -85,6 +84,18 @@ def text_editor():
     def remove_mark():
         text_edit.tag_remove("find", 1.0, tk.END)
 
+    def settings_file():
+        pass
+
+    def change_background_color():
+        pass
+
+    def change_font_type():
+        pass
+
+    def change_font_size():
+        pass
+
     def delete_content():
 
         answer = messagebox.askquestion("Confirmation", "Аre you sure you want to delete all content?")
@@ -99,7 +110,8 @@ def text_editor():
     text_edit = tk.Text(window, state="normal", background="LightCyan2", font=("Arial", 12))
     frame = tk.Frame(window, relief=tk.RAISED, border=1)
     menu_bar = tk.Menu(window)
-    search_menu = tk.Menu(menu_bar, tearoff=0)
+    search_menu = tk.Menu(menu_bar, tearoff=False)
+    settings_menu = tk.Menu(menu_bar, tearoff=False)
 
     window.config(menu=menu_bar)
 
@@ -115,6 +127,11 @@ def text_editor():
     search_menu.add_command(label="Find", command=find_text)
     search_menu.add_command(label="Remove mark", command=remove_mark)
     menu_bar.add_cascade(label="Search text", menu=search_menu)
+
+    settings_menu.add_command(label="Background color", command=change_background_color)
+    settings_menu.add_command(label="Font type", command=change_font_type)
+    settings_menu.add_command(label="Font size", command=change_font_size)
+    menu_bar.add_cascade(label="Settings", menu=settings_menu)
 
     menu_bar.add_command(label="Delete", command=delete_content)
 
