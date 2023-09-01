@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from tkinter.simpledialog import askstring
+from colors_data import colors_numbers, colors_text
 
 
 def text_editor():
@@ -85,18 +86,8 @@ def text_editor():
         text_edit.tag_remove("find", 1.0, tk.END)
 
     def change_background_color():
-        num = background_color.get()
-        colors_numbers = {0: "black",
-                          1: "gray35",
-                          2: "floral white",
-                          3: "LightCyan2",
-                          4: "DarkOliveGreen3"}
 
-        colors_text = {0: "white",
-                       1: "white",
-                       2: "black",
-                       3: "black",
-                       4: "black"}
+        num = background_color.get()
 
         text_edit.config(background=colors_numbers[num], fg=colors_text[num])
 
@@ -147,11 +138,13 @@ def text_editor():
     settings_menu.add_cascade(label="Font size", menu=size_menu)
 
     background_color = tk.IntVar()
+    background_color.set(4)
     background_menu.add_radiobutton(label="Black", value=0, variable=background_color, command=change_background_color)
     background_menu.add_radiobutton(label="Dark", value=1, variable=background_color, command=change_background_color)
     background_menu.add_radiobutton(label="Light", value=2, variable=background_color, command=change_background_color)
-    background_menu.add_radiobutton(label="Blue", value=3, variable=background_color, command=change_background_color)
-    background_menu.add_radiobutton(label="Green", value=4, variable=background_color, command=change_background_color)
+    background_menu.add_radiobutton(label="White", value=3, variable=background_color, command=change_background_color)
+    background_menu.add_radiobutton(label="Blue", value=4, variable=background_color, command=change_background_color)
+    background_menu.add_radiobutton(label="Green", value=5, variable=background_color, command=change_background_color)
 
     menu_bar.add_command(label="Delete", command=delete_content)
 
