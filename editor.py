@@ -86,12 +86,19 @@ def text_editor():
 
     def change_background_color():
         num = background_color.get()
-        colors_numbers = {1: "floral white",
-                          2: "gray35",
+        colors_numbers = {0: "black",
+                          1: "gray35",
+                          2: "floral white",
                           3: "LightCyan2",
                           4: "DarkOliveGreen3"}
 
-        text_edit.config(background=colors_numbers[num])
+        colors_text = {0: "white",
+                       1: "white",
+                       2: "black",
+                       3: "black",
+                       4: "black"}
+
+        text_edit.config(background=colors_numbers[num], fg=colors_text[num])
 
     def change_font_type():
         pass
@@ -140,8 +147,9 @@ def text_editor():
     settings_menu.add_cascade(label="Font size", menu=size_menu)
 
     background_color = tk.IntVar()
-    background_menu.add_radiobutton(label="Light", value=1, variable=background_color, command=change_background_color)
-    background_menu.add_radiobutton(label="Dark", value=2, variable=background_color, command=change_background_color)
+    background_menu.add_radiobutton(label="Black", value=0, variable=background_color, command=change_background_color)
+    background_menu.add_radiobutton(label="Dark", value=1, variable=background_color, command=change_background_color)
+    background_menu.add_radiobutton(label="Light", value=2, variable=background_color, command=change_background_color)
     background_menu.add_radiobutton(label="Blue", value=3, variable=background_color, command=change_background_color)
     background_menu.add_radiobutton(label="Green", value=4, variable=background_color, command=change_background_color)
 
