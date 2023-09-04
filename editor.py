@@ -159,8 +159,6 @@ def text_editor():
 
     settings_menu.add_command(label="Font size", command=change_font_size)
 
-    # TODO: push now and make small, medium, large, extra large type of font size
-
     window.mainloop()
 
 
