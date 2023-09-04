@@ -2,11 +2,12 @@ import os
 import tkinter as tk
 from tkinter import messagebox
 from tkinter.filedialog import askopenfilename, asksaveasfilename
-from tkinter.simpledialog import askstring, askinteger
-from data import colors_for_background, colors_for_text, all_font_types
+from tkinter.simpledialog import askstring
+from data import colors_for_background, colors_for_text, all_font_types, all_size_chars
 
 
 def text_editor():
+    global num
 
     def open_file():
         global filepath
@@ -86,15 +87,16 @@ def text_editor():
         text_edit.tag_remove("find", 1.0, tk.END)
 
     def change_background_color():
-        num = bg_color_num.get()
-        text_edit.config(background=colors_for_background[num], fg=colors_for_text[num])
+        num_bg = bg_color_num.get()
+        text_edit.config(background=colors_for_background[num_bg], fg=colors_for_text[num_bg])
 
     def change_font_type():
-        num = font_color_num.get()
-        text_edit.config(font=(all_font_types[num], 12, "normal"))
+        font_num = font_color_num.get()
+        text_edit.config(font=(all_font_types[font_num], all_size_chars[char], "normal"))
 
     def change_font_size():
-        pass
+        char = size_char.get()
+        text_edit.config(font=(all_font_types[font_num], all_size_chars[char], "normal"))
 
 
     def delete_content():
@@ -109,14 +111,17 @@ def text_editor():
     my_icon = tk.PhotoImage(file="C:\\Users\\USER\\Desktop\\v_logo.png")
     window.iconphoto(True, my_icon)
 
-    my_custom_font = ("Arial", 12, "normal")
+    char = "m"
+    font_num = 0
+    my_custom_font = (all_font_types[font_num], all_size_chars[char], "normal")
     text_edit = tk.Text(window, state="normal", background="LightCyan2", font=my_custom_font)
     frame = tk.Frame(window, relief=tk.RAISED, border=1)
     menu_bar = tk.Menu(window)
     search_menu = tk.Menu(menu_bar, tearoff=False)
     settings_menu = tk.Menu(menu_bar, tearoff=False)
     background_menu = tk.Menu(settings_menu, tearoff=False)
-    type_menu = tk.Menu()
+    type_menu = tk.Menu(settings_menu, tearoff=False)
+    size_menu = tk.Menu(settings_menu, tearoff=False)
 
     window.config(menu=menu_bar)
 
@@ -138,6 +143,7 @@ def text_editor():
     menu_bar.add_cascade(label="Settings", menu=settings_menu)
     settings_menu.add_cascade(label="Background color", menu=background_menu)
     settings_menu.add_cascade(label="Font type", menu=type_menu)
+    settings_menu.add_cascade(label="Font size", menu=size_menu)
 
     bg_color_num = tk.IntVar()
     bg_color_num.set(4)
@@ -157,7 +163,12 @@ def text_editor():
     type_menu.add_radiobutton(label="Calibri", value=3, variable=font_color_num, command=change_font_type)
     type_menu.add_radiobutton(label="Verdana", value=4, variable=font_color_num, command=change_font_type)
 
-    settings_menu.add_command(label="Font size", command=change_font_size)
+    size_char = tk.StringVar()
+    size_char.set("m")
+    size_menu.add_radiobutton(label="Small", value="s", variable=size_char, command=change_font_size)
+    size_menu.add_radiobutton(label="Medium", value="m", variable=size_char, command=change_font_size)
+    size_menu.add_radiobutton(label="Large", value="l", variable=size_char, command=change_font_size)
+    size_menu.add_radiobutton(label="Extra large", value="xl", variable=size_char, command=change_font_size)
 
     window.mainloop()
 
