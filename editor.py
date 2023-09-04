@@ -2,8 +2,8 @@ import os
 import tkinter as tk
 from tkinter import messagebox
 from tkinter.filedialog import askopenfilename, asksaveasfilename
-from tkinter.simpledialog import askstring
-from colors_data import colors_numbers, colors_text
+from tkinter.simpledialog import askstring, askinteger
+from data import colors_for_background, colors_for_text, all_font_types
 
 
 def text_editor():
@@ -86,19 +86,18 @@ def text_editor():
         text_edit.tag_remove("find", 1.0, tk.END)
 
     def change_background_color():
-
-        num = background_color.get()
-
-        text_edit.config(background=colors_numbers[num], fg=colors_text[num])
+        num = bg_color_num.get()
+        text_edit.config(background=colors_for_background[num], fg=colors_for_text[num])
 
     def change_font_type():
-        pass
+        num = font_color_num.get()
+        text_edit.config(font=(all_font_types[num], 12, "normal"))
 
     def change_font_size():
         pass
 
-    def delete_content():
 
+    def delete_content():
         answer = messagebox.askquestion("Confirmation", "Аre you sure you want to delete all content?")
 
         if answer == "yes":
@@ -107,15 +106,17 @@ def text_editor():
 
     window = tk.Tk()
     window.title("Vesi's text editor")
+    my_icon = tk.PhotoImage(file="C:\\Users\\USER\\Desktop\\v_logo.png")
+    window.iconphoto(True, my_icon)
 
-    text_edit = tk.Text(window, state="normal", background="LightCyan2", font=("Arial", 12))
+    my_custom_font = ("Arial", 12, "normal")
+    text_edit = tk.Text(window, state="normal", background="LightCyan2", font=my_custom_font)
     frame = tk.Frame(window, relief=tk.RAISED, border=1)
     menu_bar = tk.Menu(window)
     search_menu = tk.Menu(menu_bar, tearoff=False)
     settings_menu = tk.Menu(menu_bar, tearoff=False)
     background_menu = tk.Menu(settings_menu, tearoff=False)
     type_menu = tk.Menu()
-    size_menu = tk.Menu()
 
     window.config(menu=menu_bar)
 
@@ -132,21 +133,33 @@ def text_editor():
     search_menu.add_command(label="Find", command=find_text)
     search_menu.add_command(label="Remove mark", command=remove_mark)
 
+    menu_bar.add_command(label="Delete", command=delete_content)
+
     menu_bar.add_cascade(label="Settings", menu=settings_menu)
     settings_menu.add_cascade(label="Background color", menu=background_menu)
     settings_menu.add_cascade(label="Font type", menu=type_menu)
-    settings_menu.add_cascade(label="Font size", menu=size_menu)
 
-    background_color = tk.IntVar()
-    background_color.set(4)
-    background_menu.add_radiobutton(label="Black", value=0, variable=background_color, command=change_background_color)
-    background_menu.add_radiobutton(label="Dark", value=1, variable=background_color, command=change_background_color)
-    background_menu.add_radiobutton(label="Light", value=2, variable=background_color, command=change_background_color)
-    background_menu.add_radiobutton(label="White", value=3, variable=background_color, command=change_background_color)
-    background_menu.add_radiobutton(label="Blue", value=4, variable=background_color, command=change_background_color)
-    background_menu.add_radiobutton(label="Green", value=5, variable=background_color, command=change_background_color)
+    bg_color_num = tk.IntVar()
+    bg_color_num.set(4)
 
-    menu_bar.add_command(label="Delete", command=delete_content)
+    background_menu.add_radiobutton(label="Black", value=0, variable=bg_color_num, command=change_background_color)
+    background_menu.add_radiobutton(label="Dark", value=1, variable=bg_color_num, command=change_background_color)
+    background_menu.add_radiobutton(label="Light", value=2, variable=bg_color_num, command=change_background_color)
+    background_menu.add_radiobutton(label="White", value=3, variable=bg_color_num, command=change_background_color)
+    background_menu.add_radiobutton(label="Blue", value=4, variable=bg_color_num, command=change_background_color)
+    background_menu.add_radiobutton(label="Green", value=5, variable=bg_color_num, command=change_background_color)
+
+    font_color_num = tk.IntVar()
+    font_color_num.set(0)
+    type_menu.add_radiobutton(label="Arial", value=0, variable=font_color_num, command=change_font_type)
+    type_menu.add_radiobutton(label="Gothic", value=1, variable=font_color_num, command=change_font_type)
+    type_menu.add_radiobutton(label="Tahoma", value=2, variable=font_color_num, command=change_font_type)
+    type_menu.add_radiobutton(label="Calibri", value=3, variable=font_color_num, command=change_font_type)
+    type_menu.add_radiobutton(label="Verdana", value=4, variable=font_color_num, command=change_font_type)
+
+    settings_menu.add_command(label="Font size", command=change_font_size)
+
+    # TODO: push now and make small, medium, large, extra large type of font size
 
     window.mainloop()
 
@@ -154,4 +167,5 @@ def text_editor():
 if __name__ == '__main__':
     filepath = None
     text_editor()
+
 
