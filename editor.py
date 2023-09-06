@@ -142,21 +142,26 @@ def text_editor():
     menu_bar.add_command(label="Open", command=open_file)
     menu_bar.add_command(label="Save As", command=save_as_new_file)
     menu_bar.add_command(label="Save", command=save_file)
+    menu_bar.add_command(label="Delete", command=delete_content)
 
     menu_bar.add_cascade(label="Search text", menu=search_menu)
     search_menu.add_command(label="Find", command=find_text)
     search_menu.add_command(label="Remove mark", command=remove_mark)
 
-    menu_bar.add_command(label="Delete", command=delete_content)
-
     menu_bar.add_cascade(label="Settings", menu=settings_menu)
+
+    checkbutton_value = tk.BooleanVar()
+    settings_menu.add_checkbutton(label="Full screen", variable=checkbutton_value, command=make_full_screen)
+
     settings_menu.add_cascade(label="Background color", menu=background_menu)
+
+    settings_menu.add_separator()
+
     settings_menu.add_cascade(label="Font type", menu=type_menu)
     settings_menu.add_cascade(label="Font size", menu=size_menu)
 
     bg_color_num = tk.IntVar()
     bg_color_num.set(4)
-
     background_menu.add_radiobutton(label="Black", value=0, variable=bg_color_num, command=change_background_color)
     background_menu.add_radiobutton(label="Dark", value=1, variable=bg_color_num, command=change_background_color)
     background_menu.add_radiobutton(label="Light", value=2, variable=bg_color_num, command=change_background_color)
@@ -178,9 +183,6 @@ def text_editor():
     size_menu.add_radiobutton(label="Medium", value="m", variable=size_char, command=change_font_size)
     size_menu.add_radiobutton(label="Large", value="l", variable=size_char, command=change_font_size)
     size_menu.add_radiobutton(label="Extra large", value="xl", variable=size_char, command=change_font_size)
-
-    checkbutton_value = tk.BooleanVar()
-    settings_menu.add_checkbutton(label="Full screen", variable=checkbutton_value, command=make_full_screen)
 
     window.mainloop()
 
