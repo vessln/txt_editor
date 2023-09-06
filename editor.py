@@ -86,6 +86,13 @@ def text_editor():
     def remove_mark():
         text_edit.tag_remove("find", 1.0, tk.END)
 
+
+    def delete_content():
+        answer = messagebox.askquestion("Confirmation", "Аre you sure you want to delete all content?")
+
+        if answer == "yes":
+            text_edit.delete(1.0, tk.END)
+
     def change_background_color():
         num_bg = bg_color_num.get()
         text_edit.config(background=colors_for_background[num_bg], fg=colors_for_text[num_bg])
@@ -98,12 +105,14 @@ def text_editor():
         char = size_char.get()
         text_edit.config(font=(all_font_types[font_num], all_size_chars[char], "normal"))
 
+    def make_full_screen():
+        value = checkbutton_value.get()
 
-    def delete_content():
-        answer = messagebox.askquestion("Confirmation", "Аre you sure you want to delete all content?")
+        if value:
+            window.state("zoomed")
 
-        if answer == "yes":
-            text_edit.delete(1.0, tk.END)
+        else:
+            window.state("normal")
 
 
     window = tk.Tk()
@@ -169,6 +178,9 @@ def text_editor():
     size_menu.add_radiobutton(label="Medium", value="m", variable=size_char, command=change_font_size)
     size_menu.add_radiobutton(label="Large", value="l", variable=size_char, command=change_font_size)
     size_menu.add_radiobutton(label="Extra large", value="xl", variable=size_char, command=change_font_size)
+
+    checkbutton_value = tk.BooleanVar()
+    settings_menu.add_checkbutton(label="Full screen", variable=checkbutton_value, command=make_full_screen)
 
     window.mainloop()
 
